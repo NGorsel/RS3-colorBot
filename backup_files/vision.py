@@ -1,15 +1,9 @@
-# Tutorial: https://www.youtube.com/watch?v=KecMlLUuiE4
-# Object detection with OpenCV
-import pyautogui
 import cv2 as cv
 import numpy as np
 import os
 
-def findClickPositions(needle_img_path, haystack_img_path, threshold=0.5, debug_mode=None):
-    #Adding directory so we can directly enter filename.
-    needle_img_path = '../images/' + needle_img_path
-    haystack_img_path = '../images/' + haystack_img_path
 
+def findClickPositions(needle_img_path, haystack_img_path, threshold=0.5, debug_mode=None):
     # https://docs.opencv.org/4.2.0/d4/da8/group__imgcodecs.html
     haystack_img = cv.imread(haystack_img_path, cv.IMREAD_UNCHANGED)
     needle_img = cv.imread(needle_img_path, cv.IMREAD_UNCHANGED)
@@ -74,16 +68,18 @@ def findClickPositions(needle_img_path, haystack_img_path, threshold=0.5, debug_
                 cv.drawMarker(haystack_img, (center_x, center_y), 
                               color=marker_color, markerType=marker_type, 
                               markerSize=40, thickness=2)
+
         if debug_mode:
             cv.imshow('Matches', haystack_img)
             cv.waitKey()
             #cv.imwrite('result_click_point.jpg', haystack_img)
+
     return points
 
 
-if __name__ == "__main__":
-    #points = findClickPositions('needle.png', 'haystack.png', threshold=0.5 ,debug_mode='rectangles')
-    points = findClickPositions('needle.png', 'haystack2.png', threshold=0.5 ,debug_mode='rectangles')
-    print(points)
-    print('Done.')
-
+points = findClickPositions('../images/fireTalisman.PNG', '../images/haystack_rc.PNG', debug_mode='points')
+print(points)
+points = findClickPositions('../images/needle.png', '../images/haystack.png', 
+                            threshold=0.70, debug_mode='rectangles')
+print(points)
+print('Done.')
